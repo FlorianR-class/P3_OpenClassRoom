@@ -1,5 +1,8 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +27,11 @@ import butterknife.ButterKnife;
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
+    private Context mContext;
 
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items,Context context) {                  // Ajout du Context dans le constructeur
         mNeighbours = items;
+        mContext = context;
     }
 
     @Override
@@ -51,6 +56,17 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
             }
         });
+        // OnClick ConstraintLayout Debut de l'activite
+        holder.mConstraint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailsIntent = new Intent(mContext, DetailsNeighbourActivity.class);
+                // Parcelable putExtra
+                detailsIntent.putExtra("neighbour",neighbour);
+                //
+                mContext.startActivity(detailsIntent);
+            }
+        });
     }
 
     @Override
@@ -65,6 +81,9 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public TextView mNeighbourName;
         @BindView(R.id.item_list_delete_button)
         public ImageButton mDeleteButton;
+        // ConstraintLayout
+        @BindView(R.id.constraint)
+        public ConstraintLayout mConstraint;
 
         public ViewHolder(View view) {
             super(view);
