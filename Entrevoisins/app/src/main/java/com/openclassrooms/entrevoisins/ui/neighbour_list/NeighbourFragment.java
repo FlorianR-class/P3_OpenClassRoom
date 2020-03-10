@@ -27,14 +27,20 @@ public class NeighbourFragment extends Fragment {
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
+    private int mPage;
 
 
     /**
      * Create and return a new instance
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance() {
+    public static NeighbourFragment newInstance(int position) {
+        // Ajout "position" dans les parametres
+        Bundle bundle = new Bundle();
+        bundle.putInt("position",position);
+
         NeighbourFragment fragment = new NeighbourFragment();
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -49,6 +55,9 @@ public class NeighbourFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_neighbour_list, container, false);
         Context context = view.getContext();
+        // On recupere les parametres "position"
+        mPage = getArguments().getInt("position");
+
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
@@ -58,8 +67,15 @@ public class NeighbourFragment extends Fragment {
     /**
      * Init the List of neighbours
      */
-    private void initList() {
-        mNeighbours = mApiService.getNeighbours();
+    private void initList() {                                                                       // Ajout d'un switch en fonction de la position de la page
+        switch (mPage){
+            case 0:
+                mNeighbours = mApiService.getNeighbours();
+                break;
+            case 1:
+                mNeighbours = mApiService.getNeighbours();                                          // A Modifier !!
+                break;
+        }
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours,getContext()));
     }
 
