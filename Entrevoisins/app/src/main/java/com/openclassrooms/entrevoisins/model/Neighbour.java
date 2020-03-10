@@ -28,6 +28,9 @@ public class Neighbour implements Parcelable {
     /** About me */
     private String aboutMe;
 
+    /** Favorite */
+    private boolean favorite;                                                                       // Favorite
+
     /**
      * Constructor
      * @param id
@@ -44,7 +47,6 @@ public class Neighbour implements Parcelable {
         this.aboutMe = aboutMe;
     }
 
-    // implements Parcelable 1/2
     protected Neighbour(Parcel in) {
         id = in.readLong();
         name = in.readString();
@@ -52,6 +54,23 @@ public class Neighbour implements Parcelable {
         address = in.readString();
         phoneNumber = in.readString();
         aboutMe = in.readString();
+        favorite = in.readByte() != 0;                                                              // Favorite
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(avatarUrl);
+        dest.writeString(address);
+        dest.writeString(phoneNumber);
+        dest.writeString(aboutMe);
+        dest.writeByte((byte) (favorite ? 1 : 0));                                                  // Favorite
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Neighbour> CREATOR = new Creator<Neighbour>() {
@@ -114,6 +133,10 @@ public class Neighbour implements Parcelable {
         this.aboutMe = aboutMe;
     }
 
+    public boolean isFavorite() { return favorite; }                                               // GetterAndSetter Favorite
+
+    public void setFavorite(boolean favorite) { this.favorite = favorite;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -127,19 +150,4 @@ public class Neighbour implements Parcelable {
         return Objects.hash(id);
     }
 
-    // implements Parcelable 2/2
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(name);
-        dest.writeString(avatarUrl);
-        dest.writeString(address);
-        dest.writeString(phoneNumber);
-        dest.writeString(aboutMe);
-    }
 }
