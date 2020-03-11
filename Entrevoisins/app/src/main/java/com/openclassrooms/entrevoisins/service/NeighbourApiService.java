@@ -27,4 +27,16 @@ public interface NeighbourApiService {
      * @param neighbour
      */
     void createNeighbour(Neighbour neighbour);
+
+    /**
+     * Get all my Favorites Neighbours
+     * @return {@link List}
+     */
+    List<Neighbour> getFavorites();
+
+    /**
+     * Change neighbor's favorite status
+     * @param neighbour
+     */
+    boolean updateFavorite(Neighbour neighbour);
 }

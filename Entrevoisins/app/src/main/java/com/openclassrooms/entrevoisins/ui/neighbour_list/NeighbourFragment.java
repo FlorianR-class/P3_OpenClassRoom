@@ -73,7 +73,7 @@ public class NeighbourFragment extends Fragment {
                 mNeighbours = mApiService.getNeighbours();
                 break;
             case 1:
-                mNeighbours = mApiService.getNeighbours();                                          // A Modifier !!
+                mNeighbours = mApiService.getFavorites();
                 break;
         }
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours,getContext()));
