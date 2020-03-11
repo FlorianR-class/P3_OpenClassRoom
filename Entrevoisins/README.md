@@ -6,7 +6,7 @@ Ce dépôt contient une mini-application pour le P3 du parcours **Grande École 
 
 Clone or Download this repository and import into Android Studio.
 
-> git clone https://github.com/FlorianR
+> git clone https://github.com/FlorianR-class/P3_OpenClassRoom.git
 
 ## Run
 
