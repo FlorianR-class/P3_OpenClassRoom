@@ -11,6 +11,7 @@ import org.junit.runners.JUnit4;
 
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -58,5 +59,17 @@ public class NeighbourServiceTest {
         assertTrue(neighbourToFavorite.isFavorite());
         service.updateFavorite(neighbourToFavorite);
         assertFalse(neighbourToFavorite.isFavorite());
+    }
+    @Test
+    public void getFavoriteListWithSuccess() {
+        List<Neighbour> neighbours = service.getNeighbours();
+        neighbours.get(0).setFavorite(true);
+        neighbours.get(1).setFavorite(true);
+        neighbours.get(2).setFavorite(true);
+        List<Neighbour> favNeighbours = service.getFavorites();
+        assertThat(favNeighbours.size(), is(3));
+        assertTrue(favNeighbours.get(0).isFavorite());
+        assertTrue(favNeighbours.get(1).isFavorite());
+        assertTrue(favNeighbours.get(2).isFavorite());
     }
 }
